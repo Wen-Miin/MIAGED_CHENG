@@ -99,8 +99,9 @@ class LoginPage extends StatelessWidget {
   }
 }
 
-class PasswordField extends StatefulWidget {
 
+// TODO : faire fonctionner l'icone visibilité du mot de passe
+class PasswordField extends StatefulWidget {
   @override
   State<PasswordField> createState() => _PasswordFieldState();
 }

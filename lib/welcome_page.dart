@@ -27,8 +27,7 @@ class _WelcomePageState extends State<WelcomePage> {
             SizedBox(height: 75),
             Image.asset(
               "assets/images/MIAGE_LOGO.png",
-              width: 200,
-              // TODO : taille à modifier si besoin
+              width: 200, // TODO : taille à modifier si besoin
             ),
             SizedBox(height: 75),
             Container(

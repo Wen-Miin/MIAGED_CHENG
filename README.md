@@ -1,5 +1,5 @@
 # MIAGED_CHENG
-Wen-Miin CHENG <br/>
+Wen-Miin CHENG, étudiante en M2 MIAGE spécialité INTENSE <br/>
 
 Projet de développement mobile avec Flutter <br/>
 Application "Vinted" version light <br/>

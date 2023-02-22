@@ -1,8 +1,8 @@
 # MIAGED_CHENG
-Wen-Miin CHENG _
+Wen-Miin CHENG <br/>
 
-Projet de développement mobile avec Flutter __
-Application "Vinted" version light __
+Projet de développement mobile avec Flutter <br/>
+Application "Vinted" version light <br/>
 
 ## Getting Started
 

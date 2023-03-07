@@ -1,31 +1,24 @@
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'loginPage.dart';
+import 'firebase_options.dart';
 import 'welcome_page.dart';
 
-void main() => runApp(MainPage());
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  runApp(const MyApp());
+}
 
-class MainPage extends StatelessWidget {
-  // This widget is the root of your application.
-  //@override
-  //Widget build(BuildContext context) => Scaffold(
-  //  body: StreamBuilder<User?>(
-  //    stream: FirebaseAuth.instance.authStateChanges(),
-  //    builder: (context,snapshot){
-  //      if(snapshot.hasData){
-  //        return HomePage();
-  //      } else {
-  //        return LoginPage();
-  //      }
-  //    },
-  //  ),
-  //);
-  //const MainPage({super.key});
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Auth',
+      title: 'MIAGED',
       theme: ThemeData(
           primaryColor: Colors.teal,
           scaffoldBackgroundColor: Colors.white,
@@ -51,60 +44,6 @@ class MainPage extends StatelessWidget {
             ),
           )),
       home: WelcomePage(),
-    );
-  }
-
-}
-
-class MiagedHomePage extends StatefulWidget {
-  const MiagedHomePage({super.key, required this.title});
-
-  final String title;
-
-  @override
-  State<MiagedHomePage> createState() => _MiagedHomePageState();
-}
-
-class _MiagedHomePageState extends State<MiagedHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'Home',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-            //ElevatedButton(onPressed: _LoginPageState())
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ),
     );
   }
 }

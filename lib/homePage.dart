@@ -51,8 +51,8 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('My App'),
-        backgroundColor: Colors.teal,
+        title: Text('Acheter'),
+        backgroundColor: Colors.pinkAccent,
       ),
       body: ListView.builder(
         itemCount: _items.length,
@@ -82,7 +82,7 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
         currentIndex: _selectedIndex,
-        selectedItemColor: Colors.teal,
+        selectedItemColor: Colors.pinkAccent,
         onTap: _onItemTapped,
       ),
     );

@@ -1,4 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:miaged/models/items.dart';
+
+import 'cart.dart';
+import 'models/users.dart';
+import 'profilePage.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -6,46 +12,29 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final List<Items> _items = [];
+
   int _selectedIndex = 0;
-  static const List<Widget> _widgetOptions = <Widget>[
-    Text('Home'),
-    Text('Cart'),
-    Text('User'),
-  ];
+  late Users userProfile;
 
   void _onItemTapped(int index) {
+    switch (index) {
+      case 0:
+        Navigator.pushReplacement(context,MaterialPageRoute(builder: (context) => HomePage()));
+        break;
+      case 1:
+        Navigator.pushReplacement(context,MaterialPageRoute(builder: (context) => Cart()));
+        break;
+      case 2:
+        Navigator.pushReplacement(context,MaterialPageRoute(builder: (context) => ProfilePage(userProfile: userProfile)));
+        break;
+    }
+
     setState(() {
       _selectedIndex = index;
     });
   }
-
-  final List<Item> _items = [
-    Item(
-      name: 'Chemise',
-      price: 10.0,
-      image: AssetImage('assets/images/chemise.png'),
-    ),
-    Item(
-      name: 'Robe',
-      price: 20.0,
-      image: AssetImage('assets/images/dress.png'),
-    ),
-    Item(
-      name: 'Jeans',
-      price: 30.0,
-      image: AssetImage('assets/images/jeans.png'),
-    ),
-    Item(
-      name: 'Jupe',
-      price: 40.0,
-      image: AssetImage('assets/images/skirt.png'),
-    ),
-    Item(
-      name: 'Chaussures Vans',
-      price: 50.0,
-      image: AssetImage('assets/images/vans.png'),
-    ),
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -54,31 +43,44 @@ class _HomePageState extends State<HomePage> {
         title: Text('Acheter'),
         backgroundColor: Colors.pinkAccent,
       ),
-      body: ListView.builder(
-        itemCount: _items.length,
-        itemBuilder: (BuildContext context, int index) {
-          return ListTile(
-            leading: CircleAvatar(
-              backgroundImage: _items[index].image,
-            ),
-            title: Text(_items[index].name),
-            subtitle: Text('\€${_items[index].price}'),
+      body: FutureBuilder<QuerySnapshot>(
+        future: _firestore.collection('clothes').get(),
+        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          if (snapshot.hasError) {
+            return Text('Une erreur est survenue : ${snapshot.error}');
+          }
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(child: CircularProgressIndicator());
+          }
+          List items = snapshot.data!.docs.map((doc) => Items.fromSnapshot(doc)).toList();
+
+          return ListView.builder(
+            itemCount: items.length,
+            itemBuilder: (BuildContext context, int index) {
+              return ListTile(
+                leading: CircleAvatar(
+                  backgroundImage: NetworkImage(items[index].image),
+                ),
+                title: Text(items[index].name),
+                subtitle: Text('${items[index].size} - ${items[index].price} €'),
+              );
+            },
           );
         },
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
+            icon: Icon(Icons.store),
+            label: 'Acheter',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.shopping_cart),
-            label: 'Cart',
+            label: 'Panier',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person),
-            label: 'User',
+            label: 'Profil',
           ),
         ],
         currentIndex: _selectedIndex,
@@ -87,16 +89,4 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
-}
-
-class Item {
-  final String name;
-  final double price;
-  final AssetImage image;
-
-  Item({
-    required this.name,
-    required this.price,
-    required this.image,
-  });
 }

@@ -8,10 +8,14 @@ Projet de développement mobile avec Flutter <br/>
 Application "Vinted" version light <br/>
 
 ## Getting Started
-Lancer avec Chrome(web) <br/>
+Lancer en ligne de commande : 
+- flutter pub get 
+- flutter run 
+==> Lancer avec Chrome(web) <br/>
+
 Pour se connecter <br/>
-- login : wen@email.com <br/>
-- mdp : password <br/>
+- login : wen@email.com 
+- mdp : password 
 
 ## Fonctionnalités 
 

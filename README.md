@@ -1,8 +1,7 @@
 # MIAGED_CHENG
 Wen-Miin CHENG, étudiante en M2 MIAGE spécialité INTENSE <br/>
 
-[![forthebadge](https://forthebadge.com/images/badges/powered-by-overtime.svg)](https://forthebadge.com)
-[![forthebadge](https://forthebadge.com/images/badges/powered-by-coders-sweat.svg)](https://forthebadge.com)
+[![forthebadge](https://forthebadge.com/images/badges/powered-by-overtime.svg)](https://forthebadge.com)  [![forthebadge](https://forthebadge.com/images/badges/powered-by-coders-sweat.svg)](https://forthebadge.com)
 
 Projet de développement mobile avec Flutter <br/>
 Application "Vinted" version light <br/>

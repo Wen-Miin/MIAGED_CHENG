@@ -86,7 +86,7 @@ class _ItemDetailsState extends State<ItemDetails> {
             onPressed: () async {
               await cart.addItemToCart(item.name, item.price, item.size, item.image, item.brand);
             },
-            child: Text('Add to cart'),
+            child: Text('Ajouter au panier'),
           ),),
         ],
       ),

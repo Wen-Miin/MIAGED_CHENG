@@ -14,7 +14,6 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-  final List<Items> _items = [];
 
   int _selectedIndex = 0;
   late Users userProfile;
@@ -63,7 +62,7 @@ class _HomePageState extends State<HomePage> {
                   backgroundImage: NetworkImage(items[index].image),
                 ),
                 title: Text(items[index].name),
-                subtitle: Text('${items[index].size} - ${items[index].price} €' ),
+                subtitle: Text('Taille ${items[index].size} - ${items[index].price} €' ),
                 onTap: () {
                   Navigator.push(
                     context,

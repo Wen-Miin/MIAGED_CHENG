@@ -7,10 +7,14 @@ import 'models/carts.dart';
 import 'models/users.dart';
 
 class Cart extends StatefulWidget {
+
   @override
   _CartState createState() => _CartState();
+
   List<Items> panier = [];
   late Users users;
+  late String docId;
+  late List listId = [];
   Cart();
 
   final CollectionReference _cartCollection =
@@ -24,6 +28,10 @@ class Cart extends StatefulWidget {
       'price': price,
       'taille': taille,
       'titre': titre,
+    }).then((DocumentReference doc){
+      docId = doc.id;
+      print("l'ID du document est : ${docId}");
+      listId.add(docId);
     });
     print(" Ajout dans firebase de => titre : $titre, price : $price, taille : $taille, image : $image, marque : $marque");
   }
@@ -31,8 +39,15 @@ class Cart extends StatefulWidget {
 
 class _CartState extends State<Cart> {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final CollectionReference _cartCollection =
+  FirebaseFirestore.instance.collection('carts');
   int _selectedIndex = 1;
+  late String docId;
   late Users user;
+  late List listId = [];
+
+  List<Items> panier = [];
+  //List<String> listId = [];
 
   @override
   void initState() {
@@ -71,25 +86,49 @@ class _CartState extends State<Cart> {
   //  }
   //}
 
+  /*
+  Future<String> getEachCardId() async{
+  QuerySnapshot<Map<String, dynamic>> querySnapshot = await FirebaseFirestore.instance.collection('carts').get();
+
+  // Boucle à travers les documents pour récupérer les IDs
+  querySnapshot.docs.forEach((doc) {
+  docId = doc.id;
+  print('ID du document : $docId');
+  return docId
+  });}
+   */
+
   Future<void> removeItemFromCart(int index) async {
-    List<Items> panier = [];
-    String itemId = panier[index].id;
+    print("je suis dans removeItemFromCart()");
+    //List listId = Cart.listId;;
+    print(index);
+    print(listId);
+    String itemId = listId[index];
+    print("itemId");
     await FirebaseFirestore.instance
         .collection('carts')
         .doc(itemId)
         .delete();
+    panier.removeAt(index);
     setState(() {
       //montantTotal -= panier[index].price;
-      panier.removeAt(index);
+      //panier.removeAt(index);
     });
+
+
+    /*
+    // Récupérer la référence du document à supprimer
+    QuerySnapshot querySnapshot = await _cartCollection.where('titre', isEqualTo: 'monTitre').get();
+    DocumentSnapshot documentSnapshot = querySnapshot.docs.first;
+
+    // Supprimer le document
+    await documentSnapshot.reference.delete();
+    print("suppression");
+    */
   }
 
+
   /*
-  List<Map<String, dynamic>> cartItems = [
-    //liste des vetements
-  ];
-
-
   void removeItem(int index) {
     setState(() {
       totalAmount -= cartItems[index]['price'];
@@ -102,9 +141,7 @@ class _CartState extends State<Cart> {
       'items': FieldValue.arrayRemove([itemId]),
     });
   }
-
     final total = cartItems.fold<num>(0, (sum, item) => sum + item['price']);
-
     // Affichage de la liste des vêtements dans le panier et du total général
   }
   */
@@ -131,6 +168,8 @@ class _CartState extends State<Cart> {
             List panier = snapshot.data!.docs
                 .map((doc) => Carts.cartsFromSnapshot(doc))
                 .toList();
+            List listId = snapshot.data!.docs.map((e) => e.reference.id).toList();
+
             return
               Container(
                 height: MediaQuery.of(context).size.height*0.75,
@@ -147,8 +186,8 @@ class _CartState extends State<Cart> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       //Text('Marque: ${panier[index].brand}'),
-                      Text('Taille: ${panier[index].size}'),
-                      Text('Prix: ${panier[index].price}'),
+                      Text('Taille : ${panier[index].size}'),
+                      Text('Prix : ${panier[index].price} €'),
                     ],
                   ),
                   trailing: IconButton(

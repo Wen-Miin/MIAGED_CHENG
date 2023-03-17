@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:miaged/models/items.dart';
 
-import 'cart.dart';
+import 'cartPage.dart';
+import 'itemDetails.dart';
 import 'models/users.dart';
 import 'profilePage.dart';
 
@@ -27,7 +28,7 @@ class _HomePageState extends State<HomePage> {
         Navigator.pushReplacement(context,MaterialPageRoute(builder: (context) => Cart()));
         break;
       case 2:
-        Navigator.pushReplacement(context,MaterialPageRoute(builder: (context) => ProfilePage(userProfile: userProfile)));
+        Navigator.pushReplacement(context,MaterialPageRoute(builder: (context) => ProfilePage()));
         break;
     }
 
@@ -62,7 +63,15 @@ class _HomePageState extends State<HomePage> {
                   backgroundImage: NetworkImage(items[index].image),
                 ),
                 title: Text(items[index].name),
-                subtitle: Text('${items[index].size} - ${items[index].price} €'),
+                subtitle: Text('${items[index].size} - ${items[index].price} €' ),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ItemDetails(item: items[index]),
+                    ),
+                  );
+                },
               );
             },
           );

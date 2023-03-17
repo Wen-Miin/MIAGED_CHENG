@@ -1,16 +1,39 @@
-import 'package:flutter/cupertino.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-class Item {
-  final String name;
-  final double price;
-  final AssetImage image;
-  final String size;
+class Items {
+  String id;
+  String name;
+  String price;
+  String size;
+  String image;
+  String brand;
+
+  Items(
+      this.id,
+      this.name,
+      this.price,
+      this.size,
+      this.image,
+      this.brand);
+
+  //définir liste
+  final List<Items> _items = [];
+
+  // récupérer la liste des éléments pour chaque item
+  List<Items> get items => _items;
 
 
-  Item({
-    required this.name,
-    required this.price,
-    required this.size,
-    required this.image,
-  });
+  // Méthode pour créer une instance de Items à partir d'un DocumentSnapshot Firestore
+  static Items fromSnapshot(DocumentSnapshot snapshot) {
+    final data = snapshot.data() as Map<String, dynamic>;
+    return Items(
+      data['id'],
+      data['titre'],
+      data['price'],
+      data['taille'],
+      data['image'],
+      data['marque'],
+    );
+  }
+
 }

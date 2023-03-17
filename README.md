@@ -5,14 +5,10 @@ Projet de développement mobile avec Flutter <br/>
 Application "Vinted" version light <br/>
 
 ## Getting Started
+Lancer avec Chrome(web) <br/>
+login : wen@email.com <br/>
+mdp : password <br/>
 
-This project is a starting point for a Flutter application.
+## Fonctionnalités 
 
-A few resources to get you started if this is your first Flutter project:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
